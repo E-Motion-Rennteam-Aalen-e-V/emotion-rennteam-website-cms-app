@@ -1,0 +1,247 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --background: #06070d;
+  --surface: #10121b;
+  --surface-2: #171a26;
+  --foreground: #f5f6f8;
+  --muted: #9aa0b4;
+  /* Brand colors: mittelblau (#0071B5) as the primary accent, dunkelblau
+     (#162E7B) as the secondary accent. */
+  --accent: #0071b5;
+  --accent-2: #162e7b;
+  /* Lightened variants of --accent/--accent-2 for use as *text* color. The base
+     accent colors are only ~1.6-3.9:1 against our dark backgrounds - enough for
+     borders/icons/large headings (3:1, dunkelblau even falls short of that) but
+     below the 4.5:1 WCAG AA threshold for normal-size text, including on the
+     semi-transparent accent/15 badge fills used across the site. Verified
+     against every background these run against (background/surface/surface-2
+     and the accent/15 + accent-2/15 badge fills). */
+  --accent-text: #5aa6d6;
+  --accent-2-text: #7c8bc9;
+  --accent-foreground: #ffffff;
+  --border: #232635;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-text: var(--accent-text);
+  --color-accent-2-text: var(--accent-2-text);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+/* Consistent, visible keyboard-focus indicator across the site (WCAG 2.4.7).
+   Only shows for keyboard/programmatic focus, not for mouse clicks. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-2);
+  border-radius: 999px;
+  border: 2px solid var(--background);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+.container-page {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.text-gradient-accent {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.checkered-divider {
+  height: 10px;
+  background-image:
+    linear-gradient(45deg, #fff 25%, transparent 25%),
+    linear-gradient(-45deg, #fff 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #fff 75%),
+    linear-gradient(-45deg, transparent 75%, #fff 75%);
+  background-size: 10px 10px;
+  background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
+  background-color: #0a0a0a;
+  opacity: 0.5;
+}
+
+@keyframes drive-across {
+  from {
+    left: -15%;
+  }
+  to {
+    left: 112%;
+  }
+}
+
+@keyframes wheel-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.animate-drive-across {
+  animation: drive-across 1.7s linear infinite;
+}
+
+.animate-wheel-bounce {
+  animation: wheel-bounce 0.3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drive-across,
+  .animate-wheel-bounce {
+    animation: none;
+  }
+}
+
+/* Tier-animated sponsor cards (Sponsoren-Seite): pulsing gradient border +
+   a periodic light sweep, colored per tier via --tier-* custom properties
+   set inline on each card. Partner-tier cards don't get this class at all
+   and keep the plain hover style, so the effect visually reinforces the
+   tier hierarchy instead of just being decoration. */
+.sponsor-card--tier {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(135deg, var(--tier-border-glow), transparent 45%, var(--tier-border-glow)) border-box;
+  animation: sponsor-glow-pulse 3.6s ease-in-out infinite;
+  transition: box-shadow 0.25s ease;
+}
+
+.sponsor-card--tier:hover {
+  animation-play-state: paused;
+  box-shadow: 0 0 34px -4px var(--tier-glow);
+}
+
+.sponsor-card__shimmer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(115deg, transparent 35%, var(--tier-shimmer) 50%, transparent 65%);
+  background-size: 250% 100%;
+  background-position: -150% 0;
+  opacity: 0;
+  animation: sponsor-shimmer 3.6s ease-in-out infinite;
+  animation-delay: var(--shimmer-delay, 0s);
+}
+
+@keyframes sponsor-shimmer {
+  0%,
+  10% {
+    background-position: -150% 0;
+    opacity: 0;
+  }
+  22% {
+    opacity: 0.9;
+  }
+  50% {
+    background-position: 150% 0;
+    opacity: 0.9;
+  }
+  62%,
+  100% {
+    background-position: 150% 0;
+    opacity: 0;
+  }
+}
+
+@keyframes sponsor-glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: 0 0 26px -2px var(--tier-glow);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sponsor-card--tier,
+  .sponsor-card__shimmer {
+    animation: none !important;
+  }
+}
+
+/* Terminal-style typewriter block (technische Daten auf der Fahrzeuge-Seite) */
+.terminal-cursor {
+  animation: terminal-blink 1s step-end infinite;
+}
+
+@keyframes terminal-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-cursor {
+    animation: none;
+  }
+}

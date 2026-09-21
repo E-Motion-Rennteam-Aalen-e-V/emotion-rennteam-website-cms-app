@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Fails the build on new high/critical-severity advisories in
+      # dependencies. Moderate findings (currently: a dev-only vitest/mocker
+      # advisory that doesn't affect the shipped app) are left as warnings
+      # so CI isn't blocked on issues with no real fix available yet.
+      - run: npm audit --audit-level=high
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
+      # Must run after `build`: layout.tsx uses the `LayoutProps<"/">` ambient
+      # type, which Next.js only generates into .next/types during a build.
+      # On a fresh checkout, running this before `build` fails with
+      # "Cannot find name 'LayoutProps'" even though the code is correct.
+      - run: npx tsc --noEmit
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:a11y
