@@ -63,9 +63,9 @@ echo "Ohne Token werden Aenderungen NUR lokal auf diesem Rechner gespeichert."
 echo "Token erstellen: https://github.com/settings/tokens (fine-grained, 'Contents: Read and write')"
 echo "Der Token wird nur lokal in .env.local gespeichert (nicht Teil des Git-Repositorys) und niemals eingegeben."
 
-github_owner="Hudnur111"
-github_repo="Website---E-Motion-Rennteam-Aalen-"
-github_branch="website"
+github_owner="E-Motion-Rennteam-Aalen-e-V"
+github_repo="emotion-rennteam-website-cms-app"
+github_branch="main"
 github_token=""
 
 # Prueft den Token sofort gegen die GitHub-API, statt ihn blind zu

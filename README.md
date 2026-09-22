@@ -105,9 +105,9 @@ Erfolge, offene Positionen, Seitentexte) liegen als Markdown-Dateien in
 `content/` und werden versioniert im Repository gepflegt — kein CMS, keine
 Datenbank, keine Laufzeit-Abhängigkeit auf einen Redaktions-Server.
 
-Ein separates Redaktionssystem (Login, Editor, GitHub-Commits) existiert
-unabhängig davon im `cms-app`-Branch als eigenes Deployment. Dadurch enthält
-die öffentliche Website selbst keinen Admin-/Login-Code.
+Das Redaktionssystem (Login, Editor, GitHub-Commits) ist Teil dieses
+Repositories (`src/app/admin`, geschützt hinter `/admin/login`) und läuft im
+selben Deployment wie die öffentliche Website.
 
 ## 🔐 Betrieb & Sicherheitshinweise (Produktion)
 

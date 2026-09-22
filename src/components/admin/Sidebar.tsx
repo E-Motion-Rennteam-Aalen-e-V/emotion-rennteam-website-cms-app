@@ -15,11 +15,11 @@ export default function Sidebar({ isAdmin, visibleCollectionNames }: SidebarProp
   const visibleCollections = collections.filter((c) => visibleCollectionNames.includes(c.name));
 
   return (
-    <nav className="space-y-1">
+    <nav className="glass-card space-y-1 p-3">
       <Link
         href="/admin"
         className={`block rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-          pathname === "/admin" ? "bg-accent/15 text-accent-text" : "text-muted hover:bg-surface-2 hover:text-foreground"
+          pathname === "/admin" ? "glass-active text-foreground" : "text-muted hover:bg-white/5 hover:text-foreground"
         }`}
       >
         Übersicht
@@ -33,7 +33,7 @@ export default function Sidebar({ isAdmin, visibleCollectionNames }: SidebarProp
             key={c.name}
             href={href}
             className={`block rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-              active ? "bg-accent/15 text-accent-text" : "text-muted hover:bg-surface-2 hover:text-foreground"
+              active ? "glass-active text-foreground" : "text-muted hover:bg-white/5 hover:text-foreground"
             }`}
           >
             {c.label}
@@ -45,7 +45,7 @@ export default function Sidebar({ isAdmin, visibleCollectionNames }: SidebarProp
       <Link
         href="/admin/medien"
         className={`block rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-          pathname === "/admin/medien" ? "bg-accent/15 text-accent-text" : "text-muted hover:bg-surface-2 hover:text-foreground"
+          pathname === "/admin/medien" ? "glass-active text-foreground" : "text-muted hover:bg-white/5 hover:text-foreground"
         }`}
       >
         Medienbibliothek
@@ -57,7 +57,7 @@ export default function Sidebar({ isAdmin, visibleCollectionNames }: SidebarProp
           <Link
             href="/admin/benutzer"
             className={`block rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-              pathname === "/admin/benutzer" ? "bg-accent/15 text-accent-text" : "text-muted hover:bg-surface-2 hover:text-foreground"
+              pathname === "/admin/benutzer" ? "glass-active text-foreground" : "text-muted hover:bg-white/5 hover:text-foreground"
             }`}
           >
             Benutzerverwaltung

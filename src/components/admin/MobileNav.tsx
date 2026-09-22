@@ -61,7 +61,7 @@ export default function MobileNav({ isAdmin, visibleCollectionNames }: Props) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 32, stiffness: 320 }}
-              className="fixed inset-y-0 left-0 z-40 w-64 overflow-y-auto border-r border-border bg-surface px-4 py-6 md:hidden"
+              className="glass-bar fixed inset-y-0 left-0 z-40 w-64 overflow-y-auto px-4 py-6 md:hidden"
             >
               <div className="mb-4 flex items-center justify-between">
                 <span className="text-sm font-semibold text-foreground">Navigation</span>

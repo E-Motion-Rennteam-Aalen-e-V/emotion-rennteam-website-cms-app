@@ -245,3 +245,68 @@ select:focus-visible,
     animation: none;
   }
 }
+
+/* ---------------------------------------------------------------------
+   CMS-Admin "Glass Dashboard" Design (Login-Bereich, /admin/*).
+   Bewusst gescoped auf .admin-glass, damit die oeffentliche Website ihr
+   bestehendes Renneam-Branding (mittelblau/dunkelblau) unveraendert behaelt.
+   --------------------------------------------------------------------- */
+.admin-glass {
+  --glass-1: #fb923c;
+  --glass-2: #a3e635;
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.18);
+  position: relative;
+  isolation: isolate;
+}
+
+.admin-glass__ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60rem 32rem at 15% -10%, color-mix(in srgb, var(--glass-1) 7%, transparent), transparent 60%),
+    radial-gradient(50rem 30rem at 100% 10%, color-mix(in srgb, var(--glass-2) 5%, transparent), transparent 55%);
+}
+
+.glass-card {
+  position: relative;
+  border-radius: 1.25rem;
+  border: 1px solid var(--glass-border);
+  background: linear-gradient(155deg, rgba(18, 20, 30, 0.75), rgba(10, 11, 17, 0.85));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 30px -14px rgba(0, 0, 0, 0.7);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.glass-card:hover {
+  border-color: var(--glass-border-hover);
+  box-shadow: 0 12px 36px -14px rgba(0, 0, 0, 0.8);
+}
+
+.glass-bar {
+  border: 1px solid var(--glass-border);
+  background: rgba(16, 18, 27, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-icon {
+  background: linear-gradient(135deg, var(--glass-1), var(--glass-2));
+  color: #0a0a0a;
+}
+
+.glass-active {
+  background: linear-gradient(120deg, color-mix(in srgb, var(--glass-1) 22%, transparent), color-mix(in srgb, var(--glass-2) 16%, transparent));
+  border: 1px solid color-mix(in srgb, var(--glass-1) 35%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-card {
+    transition: none;
+  }
+}

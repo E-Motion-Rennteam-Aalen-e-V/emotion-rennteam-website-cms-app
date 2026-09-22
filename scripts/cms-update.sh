@@ -18,8 +18,8 @@ CONTENT_SYNC_MARKER="[cms-content-sync]"
 # laenger als 15s unter 1000 Bytes/s fallen.
 GIT_TIMEOUT_ARGS=(-c http.lowSpeedLimit=1000 -c http.lowSpeedTime=15)
 
-REPO_URL="https://github.com/Hudnur111/Website---E-Motion-Rennteam-Aalen-.git"
-REPO_NAME="Website---E-Motion-Rennteam-Aalen-"
+REPO_URL="https://github.com/E-Motion-Rennteam-Aalen-e-V/emotion-rennteam-website-cms-app.git"
+REPO_NAME="emotion-rennteam-website-cms-app"
 
 if ! command -v git >/dev/null 2>&1; then
     exit 0
@@ -58,7 +58,7 @@ if ! git -C "$repo_root" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
 
         if [ -z "$branch" ]; then
             branch="$(git "${GIT_TIMEOUT_ARGS[@]}" ls-remote --symref origin HEAD 2>/dev/null | sed -n 's#^ref: refs/heads/\(.*\)\tHEAD#\1#p')"
-            branch="${branch:-website}"
+            branch="${branch:-main}"
         fi
 
         if git checkout --quiet -b "$branch" 2>/dev/null && git "${GIT_TIMEOUT_ARGS[@]}" fetch --quiet origin "$branch" 2>/dev/null; then
@@ -108,7 +108,7 @@ sync_content() {
     if [ -f "$repo_root/.env.local" ]; then
         content_branch="$(grep -m1 '^GITHUB_BRANCH=' "$repo_root/.env.local" 2>/dev/null | cut -d= -f2- | tr -d '\r\n')"
     fi
-    content_branch="${content_branch:-website}"
+    content_branch="${content_branch:-main}"
 
     if [ -n "$(git status --porcelain --untracked-files=no -- content 2>/dev/null)" ]; then
         return 0
