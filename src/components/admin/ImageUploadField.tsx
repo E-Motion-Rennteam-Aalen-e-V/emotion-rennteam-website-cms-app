@@ -215,7 +215,7 @@ export default function ImageUploadField({
         </div>
       </div>
       {error && <p role="alert" className="mt-2 text-xs text-red-400">{error}</p>}
-      {warning && <p className="mt-2 text-xs text-amber-400">{warning}</p>}
+      {warning && <p role="status" className="mt-2 text-xs text-amber-400">{warning}</p>}
       {pickerOpen && (
         <LibraryPickerModal
           onSelect={(path) => {

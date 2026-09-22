@@ -13,10 +13,21 @@ export default function MobileNav({ isAdmin, visibleCollectionNames }: Props) {
   const [open, setOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
 
+  const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
   useEffect(() => {
     if (!open) return;
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") { setOpen(false); return; }
+      if (e.key !== "Tab" || !drawerRef.current) return;
+      const focusable = Array.from(drawerRef.current.querySelectorAll<HTMLElement>(FOCUSABLE));
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const current = document.activeElement;
+      if (e.shiftKey && current === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && current === last) { e.preventDefault(); first.focus(); }
+      else if (!drawerRef.current.contains(current)) { e.preventDefault(); first.focus(); }
     }
     document.addEventListener("keydown", onKeyDown);
     document.body.style.overflow = "hidden";

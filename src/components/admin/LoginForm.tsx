@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -13,9 +13,12 @@ function LoginFormInner() {
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [error, setError] = useState("");
+  const submittingRef = useRef(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (submittingRef.current) return;
+    submittingRef.current = true;
     setStatus("loading");
     setError("");
     try {
@@ -36,6 +39,8 @@ function LoginFormInner() {
     } catch {
       setError("Verbindung zum Server fehlgeschlagen.");
       setStatus("error");
+    } finally {
+      submittingRef.current = false;
     }
   }
 
