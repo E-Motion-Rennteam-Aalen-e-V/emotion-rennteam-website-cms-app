@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { CollectionDef } from "@/lib/cms/collections";
 import ContentForm from "@/components/admin/ContentForm";
 import EditorPanel from "@/components/admin/EditorPanel";
@@ -90,6 +90,13 @@ export default function CollectionExplorer({
   const [panel, setPanel] = useState<PanelState>(null);
   const [panelDirty, setPanelDirty] = useState(false);
   const [notice, setNotice] = useState<{ kind: "ok" | "warning"; message: string } | null>(null);
+  const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function showNotice(n: { kind: "ok" | "warning"; message: string }) {
+    if (noticeTimer.current) clearTimeout(noticeTimer.current);
+    setNotice(n);
+    noticeTimer.current = setTimeout(() => setNotice(null), 6000);
+  }
 
   const titleField = collection.fields.find((f) => f.isTitle);
 
@@ -362,7 +369,7 @@ export default function CollectionExplorer({
                   initialBody={source.body}
                   onDirtyChange={setPanelDirty}
                   onSaved={(result) => {
-                    setNotice(noticeForWriteResult(result, "gespeichert"));
+                    showNotice(noticeForWriteResult(result, "gespeichert"));
                     closePanel();
                     refresh();
                   }}
@@ -397,12 +404,12 @@ export default function CollectionExplorer({
                     initialBody={item.body}
                     onDirtyChange={setPanelDirty}
                     onSaved={(result) => {
-                      setNotice(noticeForWriteResult(result, "gespeichert"));
+                      showNotice(noticeForWriteResult(result, "gespeichert"));
                       closePanel();
                       refresh();
                     }}
                     onDeleted={(result) => {
-                      setNotice(noticeForWriteResult(result, "gelöscht"));
+                      showNotice(noticeForWriteResult(result, "gelöscht"));
                       closePanel();
                       refresh();
                     }}

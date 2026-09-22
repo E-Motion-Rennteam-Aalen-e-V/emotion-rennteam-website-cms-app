@@ -232,6 +232,7 @@ export default function ContentForm({
               setSlug(e.target.value);
               onDirtyChange?.(true);
             }}
+            autoComplete="off"
             className="w-full max-w-sm rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground outline-none focus:border-accent"
             placeholder="mein-eintrag"
           />
@@ -443,6 +444,12 @@ function ObjectListField({
   // nothing with them.
   const columns = field.fields && field.fields.length > 0 ? field.fields : DEFAULT_OBJECT_LIST_FIELDS;
 
+  // Stable row IDs prevent React from mixing up input state when rows are
+  // reordered via moveRow — index-based keys caused inputs to show stale
+  // values after a swap. IDs are managed alongside every mutation so they
+  // stay in sync without any effect-based synchronization.
+  const [rowIds, setRowIds] = useState<string[]>(() => value.map(() => crypto.randomUUID()));
+
   function emptyRow(): Record<string, string> {
     return Object.fromEntries(columns.map((col) => [col.name, ""]));
   }
@@ -457,7 +464,22 @@ function ObjectListField({
     const target = index + direction;
     if (target < 0 || target >= next.length) return;
     [next[index], next[target]] = [next[target], next[index]];
+    setRowIds((ids) => {
+      const nextIds = [...ids];
+      [nextIds[index], nextIds[target]] = [nextIds[target], nextIds[index]];
+      return nextIds;
+    });
     onChange(next);
+  }
+
+  function removeRow(index: number) {
+    setRowIds((ids) => ids.filter((_, i) => i !== index));
+    onChange(value.filter((_, i) => i !== index));
+  }
+
+  function addRow() {
+    setRowIds((ids) => [...ids, crypto.randomUUID()]);
+    onChange([...value, emptyRow()]);
   }
 
   return (
@@ -465,7 +487,7 @@ function ObjectListField({
       <p className="mb-1.5 block text-sm font-medium text-foreground">{field.label}</p>
       <div className="space-y-2">
         {value.map((row, i) => (
-          <div key={i} className="flex items-center gap-2">
+          <div key={rowIds[i] ?? i} className="flex items-center gap-2">
             {/* Reorder controls */}
             <div className="flex flex-col gap-0.5">
               <button
@@ -499,7 +521,7 @@ function ObjectListField({
             ))}
             <button
               type="button"
-              onClick={() => onChange(value.filter((_, idx) => idx !== i))}
+              onClick={() => removeRow(i)}
               className="rounded-md px-2.5 py-2 text-xs font-medium text-red-400 transition-colors hover:bg-red-500/10"
             >
               Entfernen
@@ -509,7 +531,7 @@ function ObjectListField({
       </div>
       <button
         type="button"
-        onClick={() => onChange([...value, emptyRow()])}
+        onClick={addRow}
         className="mt-2 rounded-lg border border-dashed border-border px-3 py-1.5 text-xs font-medium text-muted transition-colors hover:border-accent hover:text-foreground"
       >
         + Zeile hinzufügen

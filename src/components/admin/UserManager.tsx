@@ -373,6 +373,7 @@ export default function UserManager({
                         </button>
                       )}
                       <button
+                        type="button"
                         onClick={() => handleDelete(u.username)}
                         className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted transition-colors hover:border-red-500/50 hover:text-red-400"
                       >

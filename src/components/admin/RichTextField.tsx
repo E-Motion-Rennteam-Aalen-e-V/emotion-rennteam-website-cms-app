@@ -137,6 +137,11 @@ export default function RichTextField({ id, value, onChange, rows = 8 }: Props) 
           id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          onKeyDown={(e) => {
+            if (!e.ctrlKey && !e.metaKey) return;
+            if (e.key === "b") { e.preventDefault(); withTextarea((el) => applyMarkdown(el, onChange, { before: "**", placeholder: "fett" })); }
+            else if (e.key === "i") { e.preventDefault(); withTextarea((el) => applyMarkdown(el, onChange, { before: "_", placeholder: "kursiv" })); }
+          }}
           rows={rows}
           className="w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm text-foreground outline-none focus:border-accent"
           placeholder="Markdown-Text…"

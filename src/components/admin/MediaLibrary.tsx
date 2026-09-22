@@ -43,6 +43,10 @@ export default function MediaLibrary({ initialFiles }: { initialFiles: MediaFile
   }, [copiedPath]);
 
   async function uploadFile(file: File) {
+    if (file.size > 15 * 1024 * 1024) {
+      setNotice({ kind: "error", message: `"${file.name}" ist zu groß (max. 15 MB).` });
+      return;
+    }
     setUploading(true);
     setNotice(null);
     let res: Response | undefined;
@@ -102,9 +106,7 @@ export default function MediaLibrary({ initialFiles }: { initialFiles: MediaFile
     setDragOver(false);
     const files = Array.from(e.dataTransfer.files ?? []);
     if (!files.length) return;
-    for (const file of files) {
-      await uploadFile(file);
-    }
+    await Promise.all(files.map((file) => uploadFile(file)));
   }
 
   async function handleDelete(filename: string) {
