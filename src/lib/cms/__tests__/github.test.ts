@@ -31,14 +31,14 @@ describe("getGithubConfig", () => {
     expect(getGithubConfig()).toBeNull();
   });
 
-  it("defaults branch to website when GITHUB_BRANCH is unset", () => {
+  it("defaults branch to main when GITHUB_BRANCH is unset", () => {
     setGithubEnv();
     delete process.env.GITHUB_BRANCH;
     expect(getGithubConfig()).toEqual({
       token: "test-token",
       owner: "octo-owner",
       repo: "octo-repo",
-      branch: "website",
+      branch: "main",
     });
   });
 

@@ -45,11 +45,11 @@ function LoginFormInner() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br from-accent/60 via-accent-2/40 to-transparent opacity-60 blur-md"
+        className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br from-[var(--glass-1)]/60 via-[var(--glass-2)]/40 to-transparent opacity-60 blur-md"
       />
-      <div className="relative rounded-2xl border border-border bg-surface/90 p-8 shadow-2xl backdrop-blur-xl sm:p-10">
+      <div className="glass-card relative p-8 shadow-2xl sm:p-10">
         <div className="mb-8 flex flex-col items-center text-center">
-          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl border border-border bg-surface-2">
+          <div className="glass-icon mb-4 flex h-14 w-14 items-center justify-center rounded-xl shadow-[0_0_24px_-6px_var(--glass-1)]">
             <Image src="/uploads/logo.png" alt="E-Motion Rennteam Aalen" width={36} height={36} className="h-9 w-9 object-contain" />
           </div>
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-text">E-Motion Rennteam Aalen</p>
@@ -100,7 +100,7 @@ function LoginFormInner() {
           <button
             type="submit"
             disabled={status === "loading"}
-            className="relative w-full overflow-hidden rounded-lg bg-gradient-to-r from-accent to-accent-2 px-4 py-3 text-sm font-semibold text-accent-foreground shadow-lg shadow-accent/20 transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
+            className="glass-icon relative w-full overflow-hidden rounded-lg px-4 py-3 text-sm font-semibold shadow-lg shadow-[var(--glass-1)]/20 transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
           >
             {status === "loading" ? "Anmelden…" : "Anmelden"}
           </button>
