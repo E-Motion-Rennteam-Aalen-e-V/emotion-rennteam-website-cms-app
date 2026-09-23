@@ -1,6 +1,8 @@
 {
   "name": "rennteam-aalen-website",
   "version": "0.1.0",
+  "description": "E-Motion CMS - Content Management System for Rennteam Aalen Website",
+  "author": "E-Motion Rennteam Aalen e.V.",
   "private": true,
   "main": "electron/main.js",
   "homepage": "./",
@@ -80,32 +82,14 @@
       "package.json"
     ],
     "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
-          "target": "portable",
-          "arch": [
-            "x64"
-          ]
-        }
-      ],
-      "certificateFile": null,
-      "certificatePassword": null
+      "target": ["nsis", "portable"]
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "E-Motion CMS",
-      "installerIcon": "build/icon.ico",
-      "uninstallerIcon": "build/icon.ico",
-      "installerHeaderIcon": "build/icon.ico"
+      "shortcutName": "E-Motion CMS"
     },
     "portable": {
       "artifactName": "${productName}-${version}-portable.exe"
