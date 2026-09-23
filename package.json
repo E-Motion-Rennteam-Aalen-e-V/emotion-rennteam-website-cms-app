@@ -2,12 +2,17 @@
   "name": "rennteam-aalen-website",
   "version": "0.1.0",
   "private": true,
+  "main": "electron/main.js",
+  "homepage": "./",
   "scripts": {
     "postinstall": "node scripts/fix-credentials-repo-pkg.mjs",
     "dev": "next dev",
     "build": "next build",
     "analyze": "next build --experimental-analyze",
     "start": "next start",
+    "electron": "electron .",
+    "electron-dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && npm run electron\"",
+    "electron-build": "npm run build && electron-builder -w",
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -16,6 +21,7 @@
   },
   "dependencies": {
     "credentials-repo": "git+https://github.com/E-Motion-Rennteam-Aalen-e-V/Login-Benutzerverwaltung.git#main",
+    "electron-is-dev": "^3.0.1",
     "framer-motion": "^13.0.0",
     "gray-matter": "^4.0.3",
     "marked": "^18.0.9",
@@ -37,13 +43,19 @@
     "@types/react-dom": "^19",
     "@types/sanitize-html": "^2.16.1",
     "@vitejs/plugin-react": "^4.7.0",
+    "concurrently": "^10.0.5",
+    "electron": "^44.4.5",
+    "electron-builder": "^26.15.3",
+    "electron-squirrel-startup": "^1.0.1",
+    "electron-updater": "^6.8.9",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
     "jsdom": "^30.0.1",
     "playwright": "^1.62.1",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "wait-on": "^9.1.0"
   },
   "overrides": {
     "gray-matter": {
@@ -51,6 +63,58 @@
     },
     "@eslint/eslintrc": {
       "js-yaml": "4.3.2"
+    }
+  },
+  "build": {
+    "appId": "de.emotion-rennteam.cms",
+    "productName": "E-Motion CMS",
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    },
+    "files": [
+      "out/**/*",
+      "electron/**/*",
+      "public/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "certificateFile": null,
+      "certificatePassword": null
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "E-Motion CMS",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.exe"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "e-motion-rennteam-aalen-e-v",
+      "repo": "emotion-rennteam-website-cms-app",
+      "releaseType": "release"
     }
   }
 }

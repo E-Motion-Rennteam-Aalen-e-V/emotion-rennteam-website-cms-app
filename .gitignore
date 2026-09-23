@@ -22,7 +22,10 @@
 /out/
 
 # production
-/build
+/dist
+# But allow build icons for electron
+!/build
+!/build/*.ico
 
 # misc
 .DS_Store
