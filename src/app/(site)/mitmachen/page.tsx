@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getPage, getPositions, TEAM_DEPARTMENTS } from "@/lib/content";
 import Reveal from "@/components/motion/Reveal";
 import { StaggerGroup, StaggerItem } from "@/components/motion/Stagger";
@@ -43,6 +44,39 @@ export default function JoinPage() {
             <p className="mt-1 text-xs text-muted sm:text-sm">{stat.label}</p>
           </div>
         ))}
+      </Reveal>
+
+      <Reveal delay={0.04} className="mt-10">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
+          <div className="relative col-span-2 aspect-[16/9] overflow-hidden rounded-xl sm:col-span-2 sm:row-span-2 sm:aspect-auto sm:h-full">
+            <Image
+              src="/uploads/mitmachen-parkhaus.webp"
+              alt="E-Motion Rennwagen im Parkhaus"
+              fill
+              className="object-cover"
+              sizes="(max-width: 640px) 100vw, 66vw"
+              priority
+            />
+          </div>
+          <div className="relative aspect-square overflow-hidden rounded-xl">
+            <Image
+              src="/uploads/mitmachen-schloss.webp"
+              alt="E-Motion Rennwagen am Schloss"
+              fill
+              className="object-cover"
+              sizes="(max-width: 640px) 50vw, 33vw"
+            />
+          </div>
+          <div className="relative aspect-square overflow-hidden rounded-xl">
+            <Image
+              src="/uploads/mitmachen-kuhstall.webp"
+              alt="E-Motion Rennwagen im Kuhstall"
+              fill
+              className="object-cover"
+              sizes="(max-width: 640px) 50vw, 33vw"
+            />
+          </div>
+        </div>
       </Reveal>
 
       <Reveal delay={0.05} className="mt-14">
