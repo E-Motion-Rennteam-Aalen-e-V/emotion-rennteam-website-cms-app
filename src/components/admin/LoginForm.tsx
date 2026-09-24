@@ -7,8 +7,8 @@ import { motion } from "framer-motion";
 
 function HuskyMascot({ isHiding, isHappy }: { isHiding: boolean; isHappy: boolean }) {
   return (
-    <div className="relative mx-auto mb-2 h-32 w-32">
-      <svg viewBox="0 0 120 130" className="h-full w-full" aria-hidden>
+    <div className="relative mx-auto mb-2 h-40 w-32">
+      <svg viewBox="0 0 120 150" className="h-full w-full" aria-hidden>
         {/* === EARS === */}
         {/* Left ear outer */}
         <ellipse cx="28" cy="32" rx="14" ry="18" transform="rotate(-15 28 32)" fill="#6b7280" />
@@ -79,33 +79,36 @@ function HuskyMascot({ isHiding, isHappy }: { isHiding: boolean; isHappy: boolea
           <path d="M53 79 Q60 83 67 79" stroke="#374151" strokeWidth="2" fill="none" strokeLinecap="round" />
         )}
 
+        {/* === BODY / CHEST (static — visually connects head to paws) === */}
+        <ellipse cx="60" cy="104" rx="22" ry="12" fill="#9ca3af" />
+
         {/* === PAWS (animate up to cover eyes) === */}
         {/* Left paw */}
         <motion.g
-          animate={{ y: isHiding ? -38 : 0 }}
+          animate={{ y: isHiding ? -70 : 0 }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
         >
           {/* Left paw base */}
-          <rect x="18" y="104" width="32" height="26" rx="12" fill="#6b7280" />
+          <rect x="18" y="118" width="32" height="26" rx="12" fill="#6b7280" />
           {/* Left paw pads */}
-          <ellipse cx="34" cy="122" rx="8" ry="5" fill="#9ca3af" />
-          <ellipse cx="26" cy="118" rx="4" ry="3" fill="#9ca3af" />
-          <ellipse cx="34" cy="116" rx="4" ry="3" fill="#9ca3af" />
-          <ellipse cx="42" cy="118" rx="4" ry="3" fill="#9ca3af" />
+          <ellipse cx="34" cy="136" rx="8" ry="5" fill="#9ca3af" />
+          <ellipse cx="26" cy="132" rx="4" ry="3" fill="#9ca3af" />
+          <ellipse cx="34" cy="130" rx="4" ry="3" fill="#9ca3af" />
+          <ellipse cx="42" cy="132" rx="4" ry="3" fill="#9ca3af" />
         </motion.g>
 
         {/* Right paw */}
         <motion.g
-          animate={{ y: isHiding ? -38 : 0 }}
+          animate={{ y: isHiding ? -70 : 0 }}
           transition={{ duration: 0.4, ease: "easeInOut", delay: 0.05 }}
         >
           {/* Right paw base */}
-          <rect x="70" y="104" width="32" height="26" rx="12" fill="#6b7280" />
+          <rect x="70" y="118" width="32" height="26" rx="12" fill="#6b7280" />
           {/* Right paw pads */}
-          <ellipse cx="86" cy="122" rx="8" ry="5" fill="#9ca3af" />
-          <ellipse cx="78" cy="118" rx="4" ry="3" fill="#9ca3af" />
-          <ellipse cx="86" cy="116" rx="4" ry="3" fill="#9ca3af" />
-          <ellipse cx="94" cy="118" rx="4" ry="3" fill="#9ca3af" />
+          <ellipse cx="86" cy="136" rx="8" ry="5" fill="#9ca3af" />
+          <ellipse cx="78" cy="132" rx="4" ry="3" fill="#9ca3af" />
+          <ellipse cx="86" cy="130" rx="4" ry="3" fill="#9ca3af" />
+          <ellipse cx="94" cy="132" rx="4" ry="3" fill="#9ca3af" />
         </motion.g>
       </svg>
     </div>
