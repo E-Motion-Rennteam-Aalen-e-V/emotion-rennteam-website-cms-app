@@ -165,7 +165,7 @@ function LoginFormInner() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br from-[var(--glass-1)]/60 via-[var(--glass-2)]/40 to-transparent opacity-60 blur-md"
+        className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br from-accent/40 via-accent-2/20 to-transparent opacity-60 blur-md"
       />
       <div className="glass-card relative p-8 shadow-2xl sm:p-10">
         <div className="mb-6 flex flex-col items-center text-center">
