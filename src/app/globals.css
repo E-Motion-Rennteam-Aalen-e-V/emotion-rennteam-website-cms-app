@@ -252,8 +252,8 @@ select:focus-visible,
    bestehendes Renneam-Branding (mittelblau/dunkelblau) unveraendert behaelt.
    --------------------------------------------------------------------- */
 .admin-glass {
-  --glass-1: #fb923c;
-  --glass-2: #a3e635;
+  --glass-1: #0071b5;
+  --glass-2: #162e7b;
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-border-hover: rgba(255, 255, 255, 0.18);
   position: relative;
@@ -297,7 +297,7 @@ select:focus-visible,
 
 .glass-icon {
   background: linear-gradient(135deg, var(--glass-1), var(--glass-2));
-  color: #0a0a0a;
+  color: #ffffff;
 }
 
 .glass-active {
