@@ -90,6 +90,7 @@ export default function CollectionExplorer({
   const [panel, setPanel] = useState<PanelState>(null);
   const [panelDirty, setPanelDirty] = useState(false);
   const [notice, setNotice] = useState<{ kind: "ok" | "warning"; message: string } | null>(null);
+  const [previewSaveKey, setPreviewSaveKey] = useState(0);
   const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function showNotice(n: { kind: "ok" | "warning"; message: string }) {
@@ -343,6 +344,12 @@ export default function CollectionExplorer({
                 : `${collection.label} bearbeiten`
           }
           onClose={requestClosePanel}
+          previewUrl={
+            panel.mode === "edit"
+              ? (publicPreviewUrl(collectionName, panel.slug) ?? undefined)
+              : undefined
+          }
+          previewSaveKey={previewSaveKey}
         >
           {panel.mode === "create" ? (
             <ContentForm
@@ -404,6 +411,7 @@ export default function CollectionExplorer({
                     initialBody={item.body}
                     onDirtyChange={setPanelDirty}
                     onSaved={(result) => {
+                      setPreviewSaveKey((k) => k + 1);
                       showNotice(noticeForWriteResult(result, "gespeichert"));
                       closePanel();
                       refresh();

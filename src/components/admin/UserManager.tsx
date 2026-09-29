@@ -276,18 +276,34 @@ export default function UserManager({
 
         {createdInfo && (
           <div className="mt-5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300">
-            <p className="font-semibold">Benutzer &quot;{createdInfo.username}&quot; wurde angelegt.</p>
+            <p className="font-semibold">Benutzer &quot;{createdInfo.username}&quot; wurde angelegt und im System gespeichert.</p>
             <p className="mt-1">
               Zugangsdaten für die erste Anmeldung: Benutzername <strong>{createdInfo.username}</strong>, Passwort{" "}
-              <PasswordReveal password={createdInfo.password} />. Bitte sicher übermitteln – nach dem ersten Login vergibt die
-              Person selbst ein neues Passwort, das nur sie kennt.
+              <PasswordReveal password={createdInfo.password} />.
+            </p>
+            <p className="mt-2 font-medium">
+              Login-URL:{" "}
+              <code className="rounded bg-emerald-900/40 px-1.5 py-0.5 text-xs">
+                {typeof window !== "undefined" ? `${window.location.origin}/admin/login` : "/admin/login"}
+              </code>
+            </p>
+            <p className="mt-1 text-xs text-emerald-400/80">
+              Bitte Benutzername, Passwort und URL sicher übermitteln – beim ersten Login muss die Person ein eigenes Passwort vergeben.
             </p>
           </div>
         )}
       </div>
 
       <div className="rounded-xl border border-border bg-surface p-6">
-        <h2 className="font-semibold text-foreground">Bestehende Zugänge</h2>
+        <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+          <h2 className="font-semibold text-foreground">Bestehende Zugänge</h2>
+          <div className="rounded-lg border border-border bg-background px-3 py-2 text-xs text-muted">
+            <span className="font-medium text-foreground">Login-URL: </span>
+            <code className="select-all text-accent-text">
+              {typeof window !== "undefined" ? `${window.location.origin}/admin/login` : "/admin/login"}
+            </code>
+          </div>
+        </div>
 
         {error && (
           <p role="alert" className="mt-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3.5 py-2.5 text-sm text-red-400">
